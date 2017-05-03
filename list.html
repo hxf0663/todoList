@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .del {
+           text-decoration: line-through;
+            color: violet;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">选择</a>
+        </div>
+    </div>
+</div>
+<div class="container" id="app">
+    <div class="h3 text-danger">
+        你还有{{total}}样东西
+    </div>
+    <input type="text" class="form-control" placeholder="请输入" v-model="edTodo" @keyup.13="addTodo">
+    <ul class="nav nav-pills">
+        <li :class="{active:state=='complete'}"><a href="#complete">全部</a></li>
+        <li :class="{active:state=='finish'}"><a href="#finish">已完成</a></li>
+        <li :class="{active:state=='unfinish'}"><a href="#unfinish">未完成</a></li>
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item" v-for="todo of cloneTodo" :class="{del:todo.isChecked}" @dblclick="changeTitle(todo)">
+            <div v-show="currentTodo != todo">
+                <input type="checkbox" v-model="todo.isChecked">
+                <span>{{todo.title}}</span>
+                <button class="pull-right" @click="remove(todo)">&times;</button>
+            </div>
+            <input type="text" v-model="todo.title" v-show="currentTodo == todo" @blur="reset" v-focus="currentTodo == todo">
+        </li>
+    </ul>
+</div>
+<script src="modules/vue/dist/vue.js"></script>
+<script src="list.js"></script>
+
+</body>
+</html>
